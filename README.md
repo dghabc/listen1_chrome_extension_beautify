@@ -24,6 +24,9 @@
 
 搜歌，听歌，就用 `Listen1`。
 
+![1](https://user-images.githubusercontent.com/106824716/183439969-e91cbcdf-b9ca-4435-85c8-bcc94fa81dcf.jpg)
+![2](https://user-images.githubusercontent.com/106824716/183440081-19f63099-2330-41cc-bbd9-927419db76ee.jpg)
+![3](https://user-images.githubusercontent.com/106824716/183441410-68a56955-5662-458a-8433-fdf6bca76557.jpg)
 [![imgur](https://i.imgur.com/dIVFtor.gif)]()
 
 V2.9.0 新特性：自动切换播放源(Beta)
