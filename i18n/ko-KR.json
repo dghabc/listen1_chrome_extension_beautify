@@ -96,6 +96,8 @@
   "_REMOVE_SONG_FROM_PLAYLIST_SUCCESS": "성공: 재생 목록에서 음악 제거",
   "_ADD_TO_QUEUE_SUCCESS": "성공: 재생 목록에 추가",
   "_COPYRIGHT_ISSUE": "저작권 문제로 인해 실패, 대신 다른 플랫폼 검색",
+  "_DOWNLOAD_PROBLEM": "다운로드에 실패했습니다. 다른 플랫폼을 검색하십시오",
+  "_DOWNLOAD_SONG": "노래",
   "_INPUT_NEW_PLAYLIST_TITLE": "새 재생 목록 제목 입력",
   "_FAIL_OPEN_PLAYLIST_URL": "재생 목록 URL을 열지 못함",
   "_EXAMPLE": "예제:",

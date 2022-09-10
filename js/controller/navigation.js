@@ -35,6 +35,26 @@ angular.module('listenone').controller('NavigationController', [
       $scope.isDoubanLogin = data;
     });
 
+    $scope.download_music = (song) => {
+      MediaService.bootstrapTrack(
+        song,
+        (bootinfo) => {
+          const mp3url = bootinfo.url
+          const strs = mp3url.split('.'); //字符分割 
+          const houzhui = strs[strs.length-1].substring(0, 3);
+          const filename = song.title +" - "+song.artist;
+          const request = new XMLHttpRequest();
+          request.open("GET", mp3url, true);
+          request.responseType = 'blob';
+          request.onload=function(e){download(x.response, filename+'.'+houzhui);};
+          request.send();
+        },
+        () => {
+          notyf.warning(i18next.t('_DOWNLOAD_PROBLEM'), true);
+        }
+      );
+    }
+
     // isOpenSidebar
     
     if (localStorage.getObject('openSidebar') !== null) {

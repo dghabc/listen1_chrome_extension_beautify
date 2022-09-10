@@ -96,6 +96,8 @@
  "_REMOVE_SONG_FROM_PLAYLIST_SUCCESS": "移除曲目成功",
  "_ADD_TO_QUEUE_SUCCESS": "添加到當前播放成功",
  "_COPYRIGHT_ISSUE": "版權限定無法播放，請搜索其他平臺",
+ "_DOWNLOAD_PROBLEM": "下載失敗，請蒐索其他平臺",
+ "_DOWNLOAD_SONG": "下載歌曲",
  "_INPUT_NEW_PLAYLIST_TITLE": "鍵入新歌單名稱",
  "_FAIL_OPEN_PLAYLIST_URL": "未能打開鍵入的歌單位址",
  "_EXAMPLE": "例如 ",

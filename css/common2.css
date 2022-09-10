@@ -1226,7 +1226,7 @@ ul.detail-songlist li .album {
 }
 
 ul.detail-songlist li .tools {
-  flex: 0 0 110px;
+  flex: 0 0 150px;
   display: flex;
   align-items: center;
 }
@@ -2243,8 +2243,10 @@ svg.searchspinner {
 }
 
 .footer .menu ul.menu-list li .tools {
-  flex: 0 0 42px;
-  width: 42px;
+  flex: 0 0 60px;
+  width: 60px;
+  display: flex;
+  justify-content: flex-end;
 }
 .footer .menu ul.menu-list li .tools .icon {
   cursor: pointer;
@@ -2252,6 +2254,9 @@ svg.searchspinner {
 }
 .footer .menu ul.menu-list li .tools .icon:first-of-type {
   margin-right: 5px;
+  margin-left: 5px;
+  width: 16px;
+  height: 16px;
 }
 .footer .menu ul.menu-list li .tools .icon:hover {
   opacity: 1;
