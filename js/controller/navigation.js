@@ -40,13 +40,14 @@ angular.module('listenone').controller('NavigationController', [
         song,
         (bootinfo) => {
           const mp3url = bootinfo.url
-          const strs = mp3url.split('.'); //字符分割 
+          const strs = mp3url.split('.');
           const houzhui = strs[strs.length-1].substring(0, 3);
-          const filename = song.title +" - "+song.artist;
+          const filename = `${song.title } - ${song.artist}`;
           const request = new XMLHttpRequest();
           request.open("GET", mp3url, true);
           request.responseType = 'blob';
-          request.onload=function(e){download(x.response, filename+'.'+houzhui);};
+          // eslint-disable-next-line no-undef, func-names
+          request.onload=function(){download(x.response, `${filename}.${houzhui}`);};
           request.send();
         },
         () => {
@@ -664,6 +665,7 @@ angular.module('listenone').controller('NavigationController', [
 
     $scope.addLocalMusic = (list_id) => {
       if (isElectron()) {
+        // eslint-disable-next-line import/no-extraneous-dependencies
         const { remote } = require('electron');
         const remoteFunctions = remote.require('./functions.js');
         remote.dialog
