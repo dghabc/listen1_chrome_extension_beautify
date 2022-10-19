@@ -1,6 +1,6 @@
-# Listen 1 (Chrome Extension) V2.26.1
+# Listen 1 (Chrome Extension) V2.26.2
 
-（最后更新于 2022 年 09 月 10 日）
+（最后更新于 2022 年 09 月 17 日）
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
@@ -78,6 +78,12 @@ Listen1 诞生的初衷从不是和大公司的争夺版权利益，而是为了
 
 - 添加现代白，现代黑两款主题（感谢 @814959822 的提交）
 - 优化了新主题性能
+
+修复：
+
+- 修复 bilibili 的搜索错误 (感谢 @mikelxk 的提交)
+- 修复选取音乐平台时发生的闪动问题（感谢 @814959822 的提交）
+- 修复新主题在歌单少于 5 首时的显示问题
 
 `2022-08`
 

@@ -1,6 +1,6 @@
-# Listen 1 (Chrome Extension) V2.26.1
+# Listen 1 (Chrome Extension) V2.26.2
 
-（Last Update September 10th, 2022)
+（Last Update September 17th, 2022)
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
@@ -53,6 +53,12 @@ Features:
 
 - Add new themes: modern white, modern black（thanks @814959822）
 - Optimize new theme performance
+
+Fix bugs:
+
+- fix bilibili search problem (thanks @mikelxk)
+- fix hover shaking problem when choose platform（thanks @814959822）
+- fix player bar empty when playlist contains less than five songs in modern theme
 
 `2022-08`
 
