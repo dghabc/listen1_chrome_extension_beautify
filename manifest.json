@@ -53,6 +53,7 @@
     "*://*.kuwo.cn/",
     "*://*.bilibili.com/*",
     "*://*.bilivideo.com/*",
+    "*://*.bilivideo.cn/*",
     "*://*.migu.cn/*",
     "*://*.taihe.com/*",
     "*://music.91q.com/*",
@@ -62,7 +63,7 @@
     "webRequest",
     "webRequestBlocking"
   ],
-  "version": "2.26.2",
+  "version": "2.27.0",
   "web_accessible_resources": ["images/*"],
   "content_scripts": [
     {
