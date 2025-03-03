@@ -1,7 +1,64 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* global async getParameterByName isElectron */
+
+function h(t, e) {
+  // NOTICE: this function is from kuwo website, so eslint is skipped.
+  /* eslint-disable */
+  if (null == e || e.length <= 0)
+    return (
+      console.log('Please enter a password with which to encrypt the message.'),
+      null
+    );
+  for (var n = '', i = 0; i < e.length; i++) n += e.charCodeAt(i).toString();
+  var r = Math.floor(n.length / 5),
+    o = parseInt(
+      n.charAt(r) +
+        n.charAt(2 * r) +
+        n.charAt(3 * r) +
+        n.charAt(4 * r) +
+        n.charAt(5 * r)
+    ),
+    l = Math.ceil(e.length / 2),
+    c = Math.pow(2, 31) - 1;
+  if (o < 2)
+    return (
+      console.log(
+        'Algorithm cannot find a suitable hash. Please choose a different password. \nPossible considerations are to choose a more complex or longer password.'
+      ),
+      null
+    );
+  var d = Math.round(1e9 * Math.random()) % 1e8;
+  for (n += d; n.length > 10; )
+    n = (
+      parseInt(n.substring(0, 10)) + parseInt(n.substring(10, n.length))
+    ).toString();
+  n = (o * n + l) % c;
+  var h = '',
+    f = '';
+  for (i = 0; i < t.length; i++)
+    (f +=
+      (h = parseInt(t.charCodeAt(i) ^ Math.floor((n / c) * 255))) < 16
+        ? '0' + h.toString(16)
+        : h.toString(16)),
+      (n = (o * n + l) % c);
+  for (d = d.toString(16); d.length < 8; ) d = '0' + d;
+  return (f += d);
+}
+
 class kuwo {
+  static forgeMD5(message) {
+    const md = forge.md.sha1.create();
+    md.update(message);
+    const sig1 = md.digest().toHex();
+    const sig2 = forge.md5
+      .create()
+      .update(forge.util.encodeUtf8(sig1))
+      .digest()
+      .toHex();
+    return sig2;
+  }
+
   // Convert html code
   static html_decode(str) {
     let text = str;
@@ -70,6 +127,21 @@ class kuwo {
       img_url: item.pic,
       // url: `kwtrack_${musicrid}`,
       lyric_url: item.rid,
+    };
+  }
+  static kw_convert_song3(item) {
+    return {
+      id: `kwtrack_${item.DC_TARGETID}`,
+      title: this.html_decode(item.NAME),
+      artist: this.html_decode(item.ARTIST),
+      artist_id: `kwartist_${item.ARTISTID}`,
+      album: this.html_decode(item.ALBUM),
+      album_id: `kwalbum_${item.ALBUMID}`,
+      source: 'kuwo',
+      source_url: `https://www.kuwo.cn/play_detail/${item.DC_TARGETID}`,
+      img_url: `https://img2.kuwo.cn/star/albumcover/${item.web_albumpic_short}`,
+      // url: `kwtrack_${musicrid}`,
+      lyric_url: item.DC_TARGETID,
     };
   }
 
@@ -165,7 +237,7 @@ class kuwo {
       isRetryValue = isRetry;
     }
     const domain = 'https://www.kuwo.cn';
-    const name = 'kw_token';
+    const name = 'Hm_Iuvt_cdb524f42f23cer9b268564v7y735ewrq2324';
 
     cookieGet(
       {
@@ -187,11 +259,12 @@ class kuwo {
   }
 
   static kw_cookie_get(url, callback) {
+    const name = 'Hm_Iuvt_cdb524f42f23cer9b268564v7y735ewrq2324';
     this.kw_get_token((token) => {
       axios
         .get(url, {
           headers: {
-            csrf: token,
+            Secret: h(token, name),
           },
         })
         .then((response) => {
@@ -201,7 +274,7 @@ class kuwo {
               axios
                 .get(url, {
                   headers: {
-                    csrf: token2,
+                    Secret: h(token2, name),
                   },
                 })
                 .then((res) => {
@@ -247,19 +320,23 @@ class kuwo {
     // eslint-disable-line no-unused-vars
     const keyword = getParameterByName('keywords', url);
     const curpage = getParameterByName('curpage', url);
+    const pn = parseInt(curpage) - 1;
     const searchType = getParameterByName('type', url);
     let api = '';
+    let target_url = '';
     switch (searchType) {
       case '0':
         api = 'searchMusicBykeyWord';
+        target_url = `https://www.kuwo.cn/search/${api}?vipver=1&client=kt&ft=music&cluster=0&strategy=2012&encoding=utf8&rformat=json&mobi=1&issubtitle=1&show_copyright_off=1&pn=${pn}&rn=20&all=${keyword}`;
         break;
       case '1':
         api = 'searchPlayListBykeyWord';
+        target_url = `https://www.kuwo.cn/api/www/search/${api}?key=${keyword}&pn=${curpage}&rn=30`;
         break;
       default:
         break;
     }
-    const target_url = `https://www.kuwo.cn/api/www/search/${api}?key=${keyword}&pn=${curpage}&rn=20`;
+
     return {
       success: (fn) => {
         this.kw_cookie_get(target_url, (response) => {
@@ -272,11 +349,11 @@ class kuwo {
               type: searchType,
             });
           }
-          if (searchType === '0' && response.data.data !== undefined) {
-            result = response.data.data.list.map((item) =>
-              this.kw_convert_song2(item)
+          if (searchType === '0' && response.data.abslist !== undefined) {
+            result = response.data.abslist.map((item) =>
+              this.kw_convert_song3(item)
             );
-            total = response.data.data.total;
+            total = parseInt(response.data.HIT);
           } else if (searchType === '1' && response.data.data !== undefined) {
             result = response.data.data.list.map((item) => ({
               id: `kwplaylist_${item.id}`,
@@ -304,17 +381,13 @@ class kuwo {
   static bootstrap_track(track, success, failure) {
     const sound = {};
     const song_id = track.id.slice('kwtrack_'.length);
-    const target_url =
-      'https://antiserver.kuwo.cn/anti.s?' +
-      `type=convert_url&format=mp3&response=url&rid=${song_id}`;
-    /* const target_url = 'https://www.kuwo.cn/url?'
-      + `format=mp3&rid=${song_id}&response=url&type=convert_url3&br=128kmp3&from=web`;
-    https://m.kuwo.cn/newh5app/api/mobile/v1/music/src/${song_id} */
 
-    axios.get(target_url).then((response) => {
+    const target_url = `https://www.kuwo.cn/api/v1/www/music/playUrl?mid=${song_id}&type=music&httpsStatus=1&reqId=&plat=web_www&from=`;
+    this.kw_cookie_get(target_url, (response) => {
       const { data } = response;
-      if (data.length > 0) {
-        sound.url = data;
+
+      if (data && data.data && data.data.url) {
+        sound.url = data.data.url;
         sound.platform = 'kuwo';
 
         success(sound);
