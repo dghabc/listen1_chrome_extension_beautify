@@ -47,7 +47,7 @@ angular.module('listenone').controller('NavigationController', [
           request.open("GET", mp3url, true);
           request.responseType = 'blob';
           // eslint-disable-next-line no-undef, func-names
-          request.onload=function(){download(x.response, `${filename}.${houzhui}`);};
+          request.onload = function () { download(request.response, `${filename}.${houzhui}`);};
           request.send();
         },
         () => {
