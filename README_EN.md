@@ -1,6 +1,6 @@
-# Listen 1 (Chrome Extension) V2.27.0
+# Listen 1 (Chrome Extension) V2.32.0
 
-（Last Update September 17th, 2022)
+（Last Update April 1st, 2024)
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
@@ -46,6 +46,36 @@ Making your own playlist is also supported.
 2. Click Add to Firefox button
 
 ## Changelog
+
+`2023-08 ~ 2024-04`
+
+Fix bugs：
+
+- Migrate bilibili artist info api （thanks @wuhao-igno）
+- fix qq music
+- fix kugou music
+- fix kuwo music
+
+`2023-07`
+
+Fix bugs：
+
+- kuwo search api error（thanks @yhsj0919）
+- console output error（thanks @caoxiemeihao）
+
+`2022-12 ~ 2023-03`
+
+Features：
+
+- Add language support for Brazilian portuguese (thanks @nailtonvital)
+- Add new quality 320kpbs for qq music (thanks @fecet)
+
+Fix bugs:
+
+- fix kuwo music play url error (thanks @NickeyLin)
+- fix songlist export problem (thanks @@IcedWatermelonJuice)
+- fix icon state when toggle now playing page (thanks @@mnyon)
+- fix lastfm record error (thanks @@Anmizi)
 
 `2022-11`
 
