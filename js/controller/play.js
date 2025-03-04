@@ -91,6 +91,9 @@ angular.module('listenone').controller('PlayController', [
       $scope.staged_playlist = [];
       while ($scope.staged_playlist.length < STAGED_LENGTH) {
         const song = $scope.playlist[getSafeIndex(i, $scope.playlist.length)];
+        if (!song) {
+          break;
+        }
         $scope.staged_playlist.push({ ...song, stageId: `${song.id}_${i}` });
         i += 1;
       }
@@ -427,7 +430,7 @@ angular.module('listenone').controller('PlayController', [
             };
             timeResult.push({
               content: line
-                .replace(timeRegResult[0], '')
+                .replace(/\[(\d{2,}):(\d{2})(?:\.(\d{1,3}))?\]/g, '')
                 .replace(
                   /&(?:amp|lt|gt|quot|#39|apos);/g,
                   (match) => htmlUnescapes[match]
